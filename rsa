@@ -1,0 +1,44 @@
+#!/usr/bin/python3
+from sys import argv
+import math
+"""gets the first two factors of any number"""
+
+
+
+def is_prime(candidate):
+    """Checks if a number is prime"""
+    divisor = 3
+    if candidate % 2 == 0:
+        return False
+    while divisor * divisor <= candidate:
+        if candidate % divisor == 0:
+            return False
+        divisor += 2
+    return True
+
+def factorize_number(number):
+    """Factorizes a number into two smaller factors and prints the result"""
+    if number % 2 == 0:
+        divisor = 2
+        print("{}={}*{}".format(number, int(number // divisor), divisor))
+    else:
+        sqrt_num = math.sqrt(number)
+        if sqrt_num % 1 == 0:
+            print("{}={}*{}".format(number, int(sqrt_num), int(number // sqrt_num)))
+            return
+        sqrt_num = int(sqrt_num) + 1
+        for i in range(3, sqrt_num, 2):
+            if number % i == 0:
+                if is_prime(i):
+                    print("{}={}*{}".format(number, int(number // i), i))
+                    return
+
+def factorize_numbers_from_file(filename):
+    """Reads numbers from a file and factorizes them"""
+    with open(filename, encoding="utf-8") as input_file:
+        for line in input_file.readlines():
+            n = int(line)
+            factorize_number(n)
+
+if __name__ == "__main__":
+    factorize_numbers_from_file(argv[1])

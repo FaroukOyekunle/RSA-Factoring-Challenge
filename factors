@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+from sys import argv
+import math
+"""Factorize as many numbers as possible into a product of 2 smaller nums"""
+
+def factorize_number(num):
+"""gets the factors of a number"""
+    if num % 2 == 0:
+        divisor = 2
+        print("{}={}*{}".format(num, int(num // divisor), divisor))
+    else:
+        sqrt_num = int(math.sqrt(num)) + 1
+        for i in range(3, sqrt_num, +2):
+            if num % i == 0:
+                print("{}={}*{}".format(num, int(num // i), i))
+                return
+            if num % (sqrt_num + i) == 0:
+                print("{}={}*{}".format(num, sqrt_num + i, int(num // (sqrt_num + i))))
+                return
+            if num % (sqrt_num - i) == 0:
+                print("{}={}*{}".format(num, sqrt_num - 1, int(num // (sqrt_num - i))))
+                return
+
+def factorize_numbers(filename):
+"""gets the factors of a number"""
+    with open(filename, encoding="utf-8") as input_file:
+        for line in input_file.readlines():
+            n = int(line)
+            result = factorize_number(n)
+
+if __name__ == "__main__":
+    factorize_numbers(argv[1])
